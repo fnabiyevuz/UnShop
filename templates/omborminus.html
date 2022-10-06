@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    <title>Ombor | UnShop</title>
+{% endblock title %}
+{% block css %}
+
+    <!-- BEGIN PAGE LEVEL STYLES -->
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/table/datatable/datatables.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/table/datatable/custom_dt_miscellaneous.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/forms/theme-checkbox-radio.css'%}">
+    <link rel="stylesheet" type="text/css" href="{% static 'plugins/table/datatable/dt-global_style.css'%}">
+    <!-- END PAGE LEVEL STYLES -->
+{% endblock css %}
+{% block content %}
+        <!--  BEGIN CONTENT AREA  -->
+        <div id="content" class="main-content">
+            <div class="layout-px-spacing">
+
+                <div class="row layout-top-spacing layout-spacing">
+                    <div class="col-lg-12">
+                        <div class="statbox widget box box-shadow">
+                            <div class="widget-header">
+                                <div class="row" style="padding-top: 10px;">
+                                    <div class="col-lg-6 col-12 mx-auto">
+                                        <h4>Ombordagi Mahsulotlar</h4>
+                                    </div>
+                                    <div class="col-lg-6 col-12 mx-auto">
+                                        <div class="form-group">
+{#                                            <input style="width: fit-content; float: right;" id="quan" type="text" name="txt" onchange="maxx()" placeholder="max" class="form-control" required>#}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget-content widget-content-area" style="padding-top: 0;">
+                                <div class="table-responsive mb-4">
+                                    <table id="individual-col-search" class="table table-hover">
+                                        <thead>
+                                            <tr class="">
+                                                <th class="">#</th>
+                                                <th>Mahsulot</th>
+{#                                                <th>Ishlab chiqaruvchi</th>#}
+                                                <th>So`m</th>
+                                                <th>Dollar</th>
+                                                <th>Kurs</th>
+                                                <th>Soni</th>
+                                                <th>Barcode</th>
+                                                <th>Guruh</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for ombor in ombors %}
+
+                                                {% if ombor.quantity >= 0 and ombor.quantity <= 10 %}
+                                                    <tr class="">
+                                                        <td class="" style="color: red;">{{ forloop.counter }}</td>
+                                                        <td style="color: red;">{{ ombor.name }}</td>
+    {#                                                    <td>{{ ombor.preparer }}</td>#}
+                                                        <td style="color: red;">{{ ombor.som }}</td>
+                                                        <td style="color: red;">{{ ombor.dollar }}</td>
+                                                        <td style="color: red;">{{ ombor.kurs }}</td>
+                                                        <td style="color: red;">{{ ombor.quantity|floatformat:0 }}</td>
+                                                        <td style="color: red;">{{ ombor.barcode }}</td>
+                                                        <td style="color: red;">{{ ombor.group }}</td>
+                                                    </tr>
+                                                {% elif ombor.quantity > 10 and ombor.quantity <= 50 %}
+                                                    <tr class="">
+                                                       <td class="" style="color: blue;">{{ forloop.counter }}</td>
+                                                    <td style="color: blue;">{{ ombor.name }}</td>
+{#                                                    <td>{{ ombor.preparer }}</td>#}
+                                                    <td style="color: blue;">{{ ombor.som }}</td>
+                                                    <td style="color: blue;">{{ ombor.dollar }}</td>
+                                                    <td style="color: blue;">{{ ombor.kurs }}</td>
+                                                    <td style="color: blue;">{{ ombor.quantity|floatformat:0 }}</td>
+                                                    <td style="color: blue;">{{ ombor.barcode }}</td>
+                                                    <td style="color: blue;">{{ ombor.group }}</td>
+                                                </tr>
+                                                {% else %}
+                                                    <tr class="">
+{#                                                    <td class="">{{ ombor.id }}</td>#}
+                                                        <td class="" style="color: green;">{{ forloop.counter }}</td>
+                                                    <td style="color: green;">{{ ombor.name }}</td>
+{#                                                    <td>{{ ombor.preparer }}</td>#}
+                                                    <td style="color: green;">{{ ombor.som }}</td>
+                                                    <td style="color: green;">{{ ombor.dollar }}</td>
+                                                    <td style="color: green;">{{ ombor.kurs }}</td>
+                                                    <td style="color: green;">{{ ombor.quantity|floatformat:0 }}</td>
+                                                    <td style="color: green;">{{ ombor.barcode }}</td>
+                                                    <td style="color: green;">{{ ombor.group }}</td>
+                                                </tr>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+{#                                                <th class="">#</th>#}
+                                                <th>Mahsulot</th>
+                                                <th>Ishlab chiqaruvchi</th>
+                                                <th>So`m</th>
+                                                <th>Dollar</th>
+                                                <th>Kurs</th>
+                                                <th>Soni</th>
+                                                <th>Barcode</th>
+                                                <th>Guruh</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+{#    <script>#}
+{#        function maxx(){#}
+{#            quan = document.getElementById("quan").value;#}
+{#            console.log(quan);#}
+{#            var dt = JSON.stringify({#}
+{#                quan:quan,#}
+{#            })#}
+{#            $.ajax({#}
+{#                type: 'get',#}
+{#                url: '/quan/',#}
+{#                data: dt,#}
+{#                success: function (data) {#}
+{#                    console.log(data);#}
+{#                }#}
+{#            });#}
+{#        }#}
+{#    </script>#}
+{% endblock content %}
+{% block js %}
+
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script src="{% static 'plugins/table/datatable/datatables.js'%}"></script>
+    <script src="{% static 'plugins/table/datatable/custom_miscellaneous.js'%}"></script>
+    <!-- END PAGE LEVEL SCRIPTS -->    
+{% endblock js %}

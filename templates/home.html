@@ -1,0 +1,492 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    <title>Bosh Sahifa | UnShop</title>
+{% endblock title %}
+{% block css %}
+    <link href="{% static 'plugins/apex/apexcharts.css'%}" rel="stylesheet" type="text/css">
+    <link href="{% static 'assets/css/dashboard/dash_2.css'%}" rel="stylesheet" type="text/css" />
+    <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+    <!-- BEGIN THEME GLOBAL STYLES -->
+    <link href="{% static 'plugins/flatpickr/flatpickr.css'%}" rel="stylesheet" type="text/css">
+    <link href="{% static 'plugins/noUiSlider/nouislider.min.css'%}" rel="stylesheet" type="text/css">
+    <!-- END THEME GLOBAL STYLES -->
+
+    <!--  BEGIN CUSTOM STYLE FILE  -->
+    <link href="{% static 'assets/css/scrollspyNav.css'%}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'plugins/flatpickr/custom-flatpickr.css'%}" rel="stylesheet" type="text/css">
+    <link href="{% static 'plugins/noUiSlider/custom-nouiSlider.css'%}" rel="stylesheet" type="text/css">
+    <link href="{% static 'plugins/bootstrap-range-Slider/bootstrap-slider.css'%}" rel="stylesheet" type="text/css">
+    <!--  END CUSTOM STYLE FILE  -->
+
+{% endblock css %}
+{% block content %}
+        <!--  BEGIN CONTENT AREA  -->
+        <div id="content" class="main-content">
+            <div class="layout-px-spacing">
+                <div class="row layout-top-spacing">
+
+                    <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+                        <div class="widget widget-chart-one">
+                            <div class="widget-heading">
+{#                                <ul class="tabs tab-pills">#}
+{#                                    <li><a href="javascript:void(0);" id="tb_1" class="tabmenu">Kunlik</a></li>#}
+{#                                    <li><a href="javascript:void(0);" id="tb_2" class="tabmenu">Oylik</a></li>#}
+{#                                    <li><a href="javascript:void(0);" id="tb_3" class="tabmenu">Yillik</a></li>#}
+{#                                </ul>#}
+                            </div>
+
+                            <div class="widget-content">
+                                <div class="tabs tab-content">
+                                    <div id="content_1" class="tabcontent"> 
+                                        <div id="revenueMonthly"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-4 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+                        <div class="widget widget-chart-two">
+                            <div class="widget-heading">
+                                <h5 class="">Oylik grafik</h5>
+                            </div>
+                            <div class="widget-content">
+                                <div id="chart-2" class=""></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-8 layout-spacing">
+                        <div class="statbox widget box box-shadow p-0">
+                            <div class="row">
+                                <div class="form-group mb-0 col-12">
+                                    <input id="rangeCalendarFlatpickr" class="form-control flatpickr flatpickr-input active" type="text" placeholder="Sanani tanlang">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-4 layout-spacing">
+                        <div class="statbox widget box box-shadow p-0">
+                            <div class="row">
+                                <div class="form-group mb-0 col-12">
+                                    <span class="form-control flatpickr flatpickr-input active text-center" id="jami">Jami : {{ jami }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-12 col-lg-6 col-md-6 col-sm-12 layout-spacing">
+                        <div class="widget widget-table-two">
+
+                            <div class="widget-heading">
+                                <h5 class="">Filiallar</h5>
+                            </div>
+
+                            <div class="widget-content">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th><div class="th-content">№</div></th>
+                                                <th><div class="th-content">Filial</div></th>
+{#                                                <th><div class="th-content">Kirim</div></th>#}
+{#                                                <th><div class="th-content">Chiqim</div></th>#}
+                                                <th><div class="th-content">Naqd pul</div></th>
+                                                <th><div class="th-content">Plastik</div></th>
+                                                <th><div class="th-content">Nasiya</div></th>
+                                                <th><div class="th-content">Pul O'tkazma</div></th>
+                                                <th><div class="th-content">Qaytarilgan Nasiya</div></th>
+                                                <th><div class="th-content">Jami</div></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="fil">
+                                        {% for filial in filials %}
+                                            <tr>
+                                                <td><div class="td-content customer-name">{{ forloop.counter }}</div></td>
+                                                <td><div class="td-content customer-name">{{ filial.name }}</div></td>
+{#                                                <td><div class="td-content pricing">30 000 000</div></td>#}
+{#                                                <td><div class="td-content pricing">15 000 000</div></td>#}
+                                                <td><div class="td-content pricing">{{ filial.naqd }}</div></td>
+                                                <td><div class="td-content pricing">{{ filial.plastik }}</div></td>
+                                                <td><div class="td-content pricing">{{ filial.nasiya }}</div></td>
+                                                <td><div class="td-content pricing">{{ filial.transfer }}</div></td>
+                                                <td><div class="td-content pricing">{{ filial.pay }}</div></td>
+                                                <td><div class="td-content pricing">{{ filial.naqd|add:filial.plastik|add:filial.nasiya|add:filial.pay|add:transfer }}</div></td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-12 col-lg-6 col-md-6 col-sm-12 layout-spacing">
+                        <div class="widget widget-table-two">
+
+                            <div class="widget-heading">
+                                <h5 class="">Sotuvchilar</h5>
+                            </div>
+
+                            <div class="widget-content">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th><div class="th-content">Sotuvchi</div></th>
+                                                <th><div class="th-content">Filial</div></th>
+                                                <th><div class="th-content">Naqd pul</div></th>
+                                                <th><div class="th-content">Plastik</div></th>
+                                                <th><div class="th-content th-heading">Nasiya</div></th>
+                                                <th><div class="th-content">Pul o'tkazma</div></th>
+                                                <th><div class="th-content th-heading">Jami</div></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="sel">
+                                            {% for saler in salers %}
+                                                {% if saler.staff == 3 %}
+                                                    <tr>
+                                                        <td><div class="td-content customer-name">{{ saler.first_name }} {{ saler.last_name }}</div></td>
+                                                        <td><div class="td-content pricing">{{ saler.filial.name }}</div></td>
+                                                        <td><div class="td-content pricing">{{ saler.naqd }}</div></td>
+                                                        <td><div class="td-content pricing">{{ saler.plastik }}</div></td>
+                                                        <td><div class="td-content pricing">{{ saler.nasiya }}</div></td>
+                                                        <td><div class="td-content pricing">{{ saler.transfer }}</div></td>
+                                                        <td><div class="td-content pricing">{{ saler.naqd|add:saler.plastik|add:saler.nasiya|add:transfer }}</div></td>
+                                                    </tr>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 layout-spacing" style="height: 330px; display: none;">
+                        <div class="widget-three">
+                            <div class="widget-heading">
+                                <h5 class="">Total</h5>
+                            </div>
+                            <div class="widget-content">
+
+                                <div class="order-summary">
+
+                                    <div class="summary-list">
+                                        <div class="w-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-bag"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                                        </div>
+                                        <div class="w-summary-details">
+
+                                            <div class="w-summary-info">
+                                                <h6>Naqd</h6>
+                                                <h6 id="naqff">{{ naqdf|floatformat:-2 }}%</h6>
+                                                <p class="summary-count" id="naq">{{ naqd }}</p>
+                                            </div>
+
+                                            <div class="w-summary-stats">
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-gradient-secondary" id="naqf" role="progressbar" style="width: {{ naqdf|floatformat:0 }}%" aria-valuenow="{{ naqdf }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="summary-list">
+                                        <div class="w-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg>
+                                        </div>
+                                        <div class="w-summary-details">
+
+                                            <div class="w-summary-info">
+                                                <h6>Plastik</h6>
+                                                <h6 id="pff">{{ plastikf|floatformat:-2 }}%</h6>
+                                                <p class="summary-count" id="p">{{ plastik }}</p>
+                                            </div>
+
+                                            <div class="w-summary-stats">
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-gradient-success" id="pf" role="progressbar" style="width: {{ plastikf|floatformat:0 }}%" aria-valuenow="{{ plastikf }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="summary-list">
+                                        <div class="w-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-credit-card"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                                        </div>
+                                        <div class="w-summary-details">
+
+                                            <div class="w-summary-info">
+                                                <h6>Nasiya</h6>
+                                                <h6 id="nff">{{ nasiyaf|floatformat:-2 }}%</h6>
+                                                <p class="summary-count" id="n">{{ nasiya }}</p>
+                                            </div>
+
+                                            <div class="w-summary-stats">
+                                                <div class="progress">
+                                                    <div class="progress-bar bg-gradient-warning" id="nf" role="progressbar" style="width: {{ nasiyaf|floatformat:0 }}%" aria-valuenow="{{ nasiyaf }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+        </div>
+{% endblock content %}
+{% block js %}
+
+    <script src="{% static 'plugins/apex/apexcharts.min.js'%}"></script>
+    <script src="{% static 'assets/js/dashboard/dash_2.js'%}"></script>
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+    <script src="{% static 'plugins/highlight/highlight.pack.js'%}"></script>
+
+    <!-- BEGIN PAGE LEVEL SCRIPTS -->
+    <script src="{% static 'assets/js/scrollspyNav.js'%}"></script>
+    <script src="{% static 'plugins/flatpickr/flatpickr.js'%}"></script>
+    <script src="{% static 'plugins/noUiSlider/nouislider.min.js'%}"></script>
+
+    <script src="{% static 'plugins/flatpickr/custom-flatpickr.js'%}"></script>
+    <script src="{% static 'plugins/noUiSlider/custom-nouiSlider.js'%}"></script>
+    <script src="{% static 'plugins/bootstrap-range-Slider/bootstrap-rangeSlider.js'%}"></script>
+    <!-- END PAGE LEVEL SCRIPTS -->
+    <script>
+    $(document).ready(function () {
+        $.ajax({
+            type: 'get',
+            url: '/summa/',
+            success: function (data) {
+                var naqd = data['naqd'];
+                var plastik = data['plastik'];
+                var nasiya = data['nasiya'];
+                var transfer = data['transfer'];
+                var summ = data['summ'];
+                // console.log(naqd, plastik, nasiya, summ)
+                var options = {
+                    chart: {
+                        type: 'donut',
+                        width: 380
+                    },
+                    colors: ['#5c1ac3', '#e2a03f', '#e7515a', '#e2a03f', '#e2223f'],
+                    dataLabels: {
+                        enabled: false
+                    },
+                    legend: {
+                        position: 'bottom',
+                        horizontalAlign: 'center',
+                        fontSize: '14px',
+                        markers: {
+                            width: 10,
+                            height: 10,
+                        },
+                        itemMargin: {
+                            horizontal: 0,
+                            vertical: 8
+                        }
+                    },
+                    plotOptions: {
+                        pie: {
+                            donut: {
+                                size: '65%',
+                                background: 'transparent',
+                                labels: {
+                                    show: true,
+                                    name: {
+                                        show: true,
+                                        fontSize: '14px',
+                                        fontFamily: 'Nunito, sans-serif',
+                                        color: undefined,
+                                        offsetY: -10
+                                    },
+                                    value: {
+                                        show: true,
+                                        fontSize: '14px',
+                                        fontFamily: 'Nunito, sans-serif',
+                                        color: '20',
+                                        offsetY: 16,
+                                        formatter: function (val) {
+                                            // val = val / 1000000 + "M"
+                                            return val
+                                        }
+                                    },
+                                    total: {
+                                        show: true,
+                                        showAlways: true,
+                                        label: 'Total',
+                                        color: '#888ea8',
+                                        formatter: function (w) {
+                                            return w.globals.seriesTotals.reduce(function (a, b, c, d) {
+                                                // su = (a + b) / 1000000 + "M";
+                                                return a+b
+                                            }, 0)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    stroke: {
+                        show: true,
+                        width: 25,
+                    },
+                    series: [naqd, plastik, nasiya, transfer],
+                    labels: ['Naqd', 'Plastik', 'Nasiya', 'Pul Otkazma'],
+                    responsive: [{
+                        breakpoint: 1599,
+                        options: {
+                            chart: {
+                                width: '350px',
+                                height: '400px'
+                            },
+                            legend: {
+                                position: 'bottom'
+                            }
+                        },
+
+                        breakpoint: 1439,
+                        options: {
+                            chart: {
+                                width: '250px',
+                                height: '390px'
+                            },
+                            legend: {
+                                position: 'bottom'
+                            },
+                            plotOptions: {
+                                pie: {
+                                    donut: {
+                                        size: '65%',
+                                    }
+                                }
+                            }
+                        },
+                    }]
+                }
+                var chart = new ApexCharts(
+                    document.querySelector("#chart-2"),
+                    options
+                );
+                chart.render();
+            }
+        });
+    });
+    function getCSRFToken() {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            if (cookie.substring(0, 10) == ('csrftoken' + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(10));
+                break;
+            }
+            }
+        }
+      return cookieValue;
+    }
+    //$(document).ready(function(){
+        $('#rangeCalendarFlatpickr').on("change", function (){
+            {#console.log($('#rangeCalendarFlatpickr').val().slice(0, 10));#}
+            {#console.log($('#rangeCalendarFlatpickr').val().slice(14, 24));#}
+            var csrfToken = getCSRFToken();
+            var date1 = $('#rangeCalendarFlatpickr').val().slice(0, 10);
+            var date2 = $('#rangeCalendarFlatpickr').val().slice(14, 24);
+            {#console.log(date1, date2)#}
+            var dt = JSON.stringify({
+                date1:date1,
+                date2:date2,
+            })
+            {#console.log(dt)#}
+            $.ajax({
+                headers: { "X-CSRFToken": csrfToken },
+                type: "POST",
+                url: "{% url 'datahome' %}",
+                data: dt,
+                success: function(data11) {
+                    {#console.log(data11)#}
+                    var filials = data11['filials'];
+                    var salers = data11['salers'];
+                    var naqd = data11['naqd'];
+                    var plastik = data11['plastik'];
+                    var nasiya = data11['nasiya'];
+                    var trans = data11['transfer'];
+                    var naqdf = data11['naqdf'];
+                    var plastikf = data11['plastikf'];
+                    var nasiyaf = data11['nasiyaf'];
+                    var transf = data11['transferf'];
+                    $("#fil").empty();
+                    {#console.log(salers)#}
+                    var summ = 0;
+                    i = 1;
+                    for(dt of filials){
+                        var tr = `<tr>
+                                    <td><div class="td-content customer-name">`+i+`</div></td>
+                                    <td><div class="td-content customer-name">`+dt.name+`</div></td>
+                                    <td><div class="td-content pricing">`+String(dt.naqd)+`</div></td>
+                                    <td><div class="td-content pricing">`+String(dt.plastik)+`</div></td>
+                                    <td><div class="td-content pricing">`+String(dt.nasiya)+`</div></td>
+                                    <td><div class="td-content pricing">`+String(dt.transfer)+`</div></td>
+                                    <td><div class="td-content pricing">`+String(dt.pay)+`</div></td>
+                                    <td><div class="td-content pricing">`+String(dt.naqd+dt.plastik+dt.nasiya + dt.pay + dt.transfer)+`</div></td>
+                                </tr>`;
+                        {#console.log(dt.transfer, dt.nasiya);#}
+                        i++;
+                        $("#fil").append(tr);
+                        summ = summ + dt.naqd + dt.plastik + dt.nasiya + dt.pay + dt.transfer;
+                    }
+                    $('#jami').empty();
+                    $('#jami').append('Jami : ', summ);
+                    $("#sel").empty();
+                    for(dt of salers){
+                        if(dt.staff == 3) {
+                            {#console.log(dt.name)#}
+                            var tr = `<tr>
+                                <td><div class="td-content customer-name">` + dt.name + `</div></td>
+                                <td><div class="td-content pricing">` + dt.filial + `</div></td>
+                                <td><div class="td-content pricing">` + String(dt.naqd) +`</div></td>
+                                <td><div class="td-content pricing">` + String(dt.plastik) + `</div></td>
+                                <td><div class="td-content pricing">` + String(dt.nasiya) + `</div></td>
+                                <td><div class="td-content pricing">` + String(dt.transfer) + `</div></td>
+                                <td><div class="td-content pricing">` + String(dt.naqd+dt.plastik+dt.nasiya+dt.transfer) + `</div></td>
+                            </tr>`;
+                            $('#sel').append(tr);
+
+                        }
+                    }
+                    $("#naq").html(naqd);
+                    $("#p").html(plastik);
+                    $("#n").html(nasiya);
+                    $("#n").html(trans);
+                    $("#naqf").attr('class', naqdf);
+                    $("#pf").attr('class', plastikf);
+                    $("#nf").attr('class', nasiyaf);
+                    $("#nf").attr('class', transf);
+                    $("#naqf").css('width', naqdf+'|floatformat:0');
+                    $("#pf").css('width', plastikf+'|floatformat:0');
+                    $("#nf").css('width', nasiyaf+'|floatformat:0');
+                    $("#nf").css('width', transf+'|floatformat:0');
+                    $("#naqff").html(naqdf + '%');
+                    $("#pff").html(plastikf + '%');
+                    $("#nff").html(nasiyaf + '%');
+                    $("#nff").html(transf + '%');
+                    }
+            });
+        });
+    //});
+    </script>
+{% endblock js %}
